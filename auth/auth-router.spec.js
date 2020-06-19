@@ -6,7 +6,7 @@ describe('auth-router', () => {
     beforeEach(async () => {
         await db('users').truncate();
     })
-// POST request test for register
+// POST request test for /register endpoint
     describe('POST to register', () => {
 
         it('should return 201 on valid register', () => {
@@ -27,7 +27,7 @@ describe('auth-router', () => {
         });
     })
 
-    // POST request test for /login
+    // POST request test for /login endpoint
     describe('POST /login', () => {
         it('should return 401 when missing username and password', () => {
             return request(server)
