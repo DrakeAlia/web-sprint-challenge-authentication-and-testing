@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const secrets = require('../secrets/secrets.js');
 
 module.exports = (req, res, next) => {
-  res.status(401).json({ you: 'shall not pass!' });
+  // res.status(401).json({ you: 'shall not pass!' });
 
   // tokens are normally sent as the Authorization header
   const token = req.headers.authorization;

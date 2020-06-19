@@ -1,21 +1,22 @@
-describe("joke-router", function() {
-    it("runs the tests", function() {
-      expect(true).toBe(true);
-    });
-  
-    describe("GET /api/jokes", function() {
-      it("should return status 200", () => {
-        return request(server)
-          .get("/api/jokes")
-          .then(res => {
-            expect(res.status).toBe(200);
-          });
-      });
-      it('should return JSON', function() {
-          return request(server).get('/api/jokes')
-          .then(res => {
-              expect(res.type).toMatch(/json/i);
-          })
-      })
-    });
-  }); 
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+
+const authenticate = require('../auth/authenticate-middleware.js');
+const authRouter = require('../auth/auth-router.js');
+const jokesRouter = require('../jokes/jokes-router.js');
+
+const server = express();
+
+server.use(helmet());
+server.use(cors());
+server.use(express.json());
+
+server.use('/api/auth', authRouter);
+server.use('/api/jokes', authenticate, jokesRouter);
+
+server.get("/", (req, res) => {
+    res.status(200).json({ api: "up" });
+})
+
+module.exports = server;
